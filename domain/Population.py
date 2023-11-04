@@ -20,9 +20,12 @@ class Population:
         max_dist = max(self.chromosomes, key=lambda x: x.vehicle_num).vehicle_num
         return chromosome.vehicle_num - max_dist + chromosome.total_distance / max_dist
 
+    # Chromosome Fitness 동기화
     def sync_instances(self):
         for chromosome in self.chromosomes:
-            chromosome.fitness = self.get_fitness(chromosome)
+            fitness = self.get_fitness(chromosome)
+            chromosome.fitness = fitness
+            self.total_fitness += fitness
 
         self.chromosomes.sort(key=lambda x: x.fitness, reverse=True)
 
@@ -31,4 +34,5 @@ class Population:
             chromosomes = make_pop()
         self.chromosomes = chromosomes
         self.max_initial_dist = max(self.chromosomes, key=lambda x: x.total_distance)
+        self.total_fitness = 0
         self.sync_instances()
