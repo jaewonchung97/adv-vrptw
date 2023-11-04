@@ -18,6 +18,5 @@ class Dataset:
     def __init__(self, vehicle_num, capacity, customers: List[Customer]):
         self.vehicle_num = vehicle_num
         self.capacity = capacity
-        self.depot = customers[0]
-        self.customers = customers[1:]
+        self.customers = customers
         self.distance = get_metrix(customers)

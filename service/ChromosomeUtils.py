@@ -3,10 +3,10 @@ from typing import List
 from domain.DatasetDTO import Dataset
 
 
-def get_chrom(permutation: List[int], dataset: Dataset):
+def get_chromosome(permutation: list, dataset: Dataset):
     chrom = []
     capacity = dataset.capacity
-    due_time = dataset.depot.due_time
+    due_time = dataset.customers[0].due_time
 
     cur_route = []
     prev_demand = 0
@@ -30,6 +30,21 @@ def get_chrom(permutation: List[int], dataset: Dataset):
             prev_time = dataset.distance[0][cur_customer_idx] \
                         + cur_customer.service_time
             prev_customer_idx = cur_customer_idx
-    if not cur_route:
+    if cur_route:
         chrom.append(cur_route)
     return chrom
+
+
+def get_fitness(chromosome: List[List[int]], dataset: Dataset):
+    print(chromosome)
+    fitness = 0
+    for route in chromosome:
+        distance = 0
+        prev_cus_id = 0
+        for cur_cus_id in route:
+            distance += dataset.distance[prev_cus_id][cur_cus_id]
+            prev_cus_id = cur_cus_id
+        fitness += distance
+    print(fitness)
+
+
