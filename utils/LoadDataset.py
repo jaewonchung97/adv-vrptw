@@ -23,7 +23,7 @@ def get_cus(parameters):
                     parameters[6])
 
 
-def load_dataset(instance_name: str, customers_num: int) -> Dataset:
+def load_dataset(instance_name: str) -> Dataset:
     with open("resources/datasets/%s.txt" % instance_name) as f:
         customers = []
         for idx, line in enumerate(f):
@@ -33,7 +33,7 @@ def load_dataset(instance_name: str, customers_num: int) -> Dataset:
                 params = line.strip().split()
                 vehicle_num = int(params[0])
                 capacity = int(params[1])
-            elif idx <= 9 + customers_num:
+            else:
                 params = line.strip().split()
                 customers.append(get_cus(params))
         dataset = Dataset(vehicle_num, capacity, customers)
