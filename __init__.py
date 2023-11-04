@@ -1,6 +1,9 @@
 import os
+import sys
 
-BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+from main import main
+
+sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 
 if __name__ == '__main__':
-    print(BASE_DIR)
+    main()
