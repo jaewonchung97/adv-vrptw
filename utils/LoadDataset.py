@@ -1,5 +1,5 @@
-from domain.DatasetDTO import Dataset
-from domain.CustomerDTO import Customer
+from domain.Dataset import Dataset
+from domain.Customer import Customer
 
 """
 0 R101

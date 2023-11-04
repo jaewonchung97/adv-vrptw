@@ -1,4 +1,4 @@
-from .CustomerDTO import Customer
+from .Customer import Customer
 from typing import List
 
 
