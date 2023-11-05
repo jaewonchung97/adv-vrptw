@@ -9,12 +9,12 @@ from log.log_config import log
 
 class Crossover(metaclass=ABCMeta):
     @abstractmethod
-    def crossover(self, parents: List[Chromosome]) -> Chromosome:
+    def cross(self, parents: List[Chromosome]) -> Chromosome:
         pass
 
 
 class PMXCrossover(Crossover):
-    def crossover(self, parents: List[Chromosome]) -> Chromosome:
+    def cross(self, parents: List[Chromosome]) -> Chromosome:
         p1, p2 = parents[0], parents[1]
         p1_perm = []
         p2_perm = []
@@ -70,7 +70,7 @@ class IBXCrossover(Crossover):
             if point < sum_val:
                 return i
 
-    def crossover(self, parents: List[Chromosome]) -> Chromosome:
+    def cross(self, parents: List[Chromosome]) -> Chromosome:
         p1, p2 = parents[0], parents[1]
         r1_idx = self.select_route(p1)
         r1 = p1.routes[r1_idx]

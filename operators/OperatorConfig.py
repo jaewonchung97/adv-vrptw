@@ -1,3 +1,4 @@
+from operators.Mutation import TypicalMutation
 from operators.Selection import Selection, RouletteWheelSelection
 from operators.Crossover import Crossover, IBXCrossover, PMXCrossover
 from log.log_config import log
@@ -6,16 +7,12 @@ from log.log_config import log
 class OperatorConfig:
     selection = None
     crossover = None
+    mutation = None
 
     def __init__(self):
-        if self.selection is None:
-            self.selection = RouletteWheelSelection()
-        if self.crossover is None:
-            self.crossover = PMXCrossover()
-
-
-if __name__ == '__main__':
-    selection = OperatorConfig().selection
-    crossover = OperatorConfig().crossover
-    log.debug(f"Selection: {selection}")
-    log.debug(f"Crossover: {crossover}")
+        if OperatorConfig.selection is None:
+            OperatorConfig.selection = RouletteWheelSelection()
+        if OperatorConfig.crossover is None:
+            OperatorConfig.crossover = PMXCrossover()
+        if OperatorConfig.mutation is None:
+            OperatorConfig.mutation = TypicalMutation()

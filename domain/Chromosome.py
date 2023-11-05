@@ -1,5 +1,6 @@
 from domain.Dataset import Dataset
 from log.log_config import log
+from typing import List
 
 
 class Chromosome:
@@ -14,6 +15,13 @@ class Chromosome:
         if self.routes:
             self.vehicle_num = len(self.routes)
             self.fitness = None
+
+    @staticmethod
+    def routes_to_permutation(routes: List[List[int]]) -> List[int]:
+        result = []
+        for route in routes:
+            result.extend(route)
+        return result
 
     @staticmethod
     def get_chromosome(permutation: list):

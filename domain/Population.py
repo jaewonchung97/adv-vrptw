@@ -1,16 +1,18 @@
-import numpy
 import secrets
-
 from typing import List
+
+import numpy
 
 from config import POPULATION_SIZE, FILE_SAVE
 from domain.Chromosome import Chromosome
-from domain.Dataset import Dataset
 from log.log_config import log
 from utils.file_utils import save_file
+from utils.load_dataset import load_dataset
 
 
 class Population:
+    dataset = None
+
     def get_fitness(self, chromosome):
         max_dist = max(self.chromosomes, key=lambda x: x.vehicle_num).vehicle_num
         return chromosome.vehicle_num - max_dist + chromosome.total_distance / max_dist
@@ -27,8 +29,8 @@ class Population:
     def make_pop(self) -> List[Chromosome]:
         pop = []
         while len(pop) < POPULATION_SIZE:
-            chromosome = Chromosome(numpy.random.permutation(range(1, len(self.dataset.customers))).tolist(),
-                                    self.dataset)
+            chromosome = Chromosome(numpy.random.permutation(range(1, len(Chromosome.dataset.customers))).tolist(),
+                                    Chromosome.dataset)
             if chromosome.routes:
                 log.debug(f"Chromosome Found {chromosome.routes}")
                 if FILE_SAVE:
@@ -36,8 +38,9 @@ class Population:
                 pop.append(chromosome)
         return pop
 
-    def __init__(self, dataset: Dataset, chromosomes: list = None):
-        self.dataset = dataset
+    def __init__(self, chromosomes: List[Chromosome] = None):
+        if Chromosome.dataset is None:
+            Chromosome.dataset = load_dataset()
         if not chromosomes:
             chromosomes = self.make_pop()
         self.chromosomes = chromosomes
