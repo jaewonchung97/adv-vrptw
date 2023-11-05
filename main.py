@@ -7,6 +7,8 @@ from operators.OperatorConfig import OperatorConfig
 from config import RECOMBINATION_RATE, MIGRATION, MAX_GENERATIONS, POPULATION_SIZE
 import random
 
+from utils.graph_utils import draw_routes
+
 
 def main():
     population_1 = Population()
@@ -14,6 +16,7 @@ def main():
     log.info(f"Before--------------------------------------")
     log.info(f"pop1_best : {population_1.chromosomes[0]}")
     log.info(f"pop2_best : {population_2.chromosomes[0]}")
+    draw_routes(population_1.chromosomes[0])
 
     log.debug(f"GA--------------------------------------")
     for gen_i in range(MAX_GENERATIONS):
@@ -27,6 +30,10 @@ def main():
     log.info(f"After--------------------------------------")
     log.info(f"pop1_best : {population_1.chromosomes[0]}")
     log.info(f"pop2_best : {population_2.chromosomes[0]}")
+    if population_1.chromosomes[0].fitness < population_2.chromosomes[0].fitness:
+        draw_routes(population_1.chromosomes[0])
+    else:
+        draw_routes(population_2.chromosomes[0])
 
     log.debug(f"pop1--------------------------------------")
     for idx, chromosome in enumerate(population_1.chromosomes):

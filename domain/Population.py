@@ -41,7 +41,7 @@ class Population:
             chromosome = Chromosome(numpy.random.permutation(range(1, len(Dataset.customers))).tolist())
             if chromosome.routes:
                 log.debug(f"Chromosome Found {chromosome.routes}")
-                if FILE_SAVE:
-                    save_file(chromosome.routes, f"routes_{secrets.token_hex(8)}")
+                # if FILE_SAVE:
+                #     save_file(chromosome.routes, f"routes_{secrets.token_hex(8)}")
                 pop.append(chromosome)
         return pop

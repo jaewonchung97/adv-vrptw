@@ -47,10 +47,6 @@ def txt_to_route(txt: str):
             values[idx] = int(value)
         result += values
     return result
-
-
-import random
-
 """
 3 1 5
 x 1 x 0 0 0 0 0 0 0
@@ -68,4 +64,4 @@ def test():
 
 
 if __name__ == '__main__':
-    cross()
+    test()
