@@ -32,6 +32,10 @@ def main():
     for idx, chromosome in enumerate(population_1.chromosomes):
         log.debug(f"[{idx}]\t{chromosome}")
 
+    log.debug(f"pop2--------------------------------------")
+    for idx, chromosome in enumerate(population_2.chromosomes):
+        log.debug(f"[{idx}]\t{chromosome}")
+
 
 def migration(pop1: Population, pop2: Population) -> None:
     pop1_best = pop1.chromosomes[0:MIGRATION]
