@@ -13,12 +13,23 @@ from utils.load_dataset import load_dataset
 class Population:
     dataset = None
 
+    def __init__(self, chromosomes: List[Chromosome] = None):
+        if Chromosome.dataset is None:
+            Chromosome.dataset = load_dataset()
+        if not chromosomes:
+            chromosomes = Population.make_pop()
+        self.chromosomes = chromosomes
+        self.max_initial_dist = max(self.chromosomes, key=lambda x: x.total_distance)
+        self.total_fitness = 0
+        self.sync_instances()
+
     def get_fitness(self, chromosome):
         max_dist = max(self.chromosomes, key=lambda x: x.vehicle_num).vehicle_num
         return chromosome.vehicle_num - max_dist + chromosome.total_distance / max_dist
 
     # Chromosome Fitness 동기화 및 정렬(오름차순)
     def sync_instances(self):
+        self.total_fitness = 0
         for chromosome in self.chromosomes:
             fitness = self.get_fitness(chromosome)
             chromosome.fitness = fitness
@@ -26,7 +37,8 @@ class Population:
 
         self.chromosomes.sort(key=lambda x: x.fitness)
 
-    def make_pop(self) -> List[Chromosome]:
+    @staticmethod
+    def make_pop() -> List[Chromosome]:
         pop = []
         while len(pop) < POPULATION_SIZE:
             chromosome = Chromosome(numpy.random.permutation(range(1, len(Chromosome.dataset.customers))).tolist(),
@@ -37,13 +49,3 @@ class Population:
                     save_file(chromosome.routes, f"routes_{secrets.token_hex(8)}")
                 pop.append(chromosome)
         return pop
-
-    def __init__(self, chromosomes: List[Chromosome] = None):
-        if Chromosome.dataset is None:
-            Chromosome.dataset = load_dataset()
-        if not chromosomes:
-            chromosomes = self.make_pop()
-        self.chromosomes = chromosomes
-        self.max_initial_dist = max(self.chromosomes, key=lambda x: x.total_distance)
-        self.total_fitness = 0
-        self.sync_instances()

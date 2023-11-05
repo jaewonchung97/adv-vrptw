@@ -7,7 +7,6 @@ class Chromosome:
     dataset = None
 
     def __init__(self, permutation: list, dataset: Dataset = None):
-
         if Chromosome.dataset is None:
             Chromosome.dataset = dataset
 
@@ -15,6 +14,9 @@ class Chromosome:
         if self.routes:
             self.vehicle_num = len(self.routes)
             self.fitness = None
+
+    def __str__(self):
+        return f"Vehicle Num: {self.vehicle_num}\tDistance: {self.total_distance}\tRoutes: {self.routes}"
 
     @staticmethod
     def routes_to_permutation(routes: List[List[int]]) -> List[int]:
@@ -97,7 +99,7 @@ class Chromosome:
 
                 # Impossible Solution
                 if not cur_route:
-                    log.Error(f"[{cur_customer_idx}] Impossible {cur_route}")
+                    log.error(f"[{cur_customer_idx}] Impossible {cur_route}")
                     return None, None, None
 
                 # 복귀

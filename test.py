@@ -3,7 +3,6 @@ import sys
 
 from domain.Chromosome import Chromosome
 
-from log.log_config import log
 from utils.load_dataset import load_dataset
 
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
@@ -51,9 +50,10 @@ def txt_to_route(txt: str):
 
 
 def test():
-    route = txt_to_route(sol)
-    chromosome = Chromosome(route, load_dataset())
-    log.debug(f"[End] Final Routes: {chromosome.routes}")
+    list_1 = [1, 2, 3, 4, 5]
+    list_2 = [99, 98]
+    list_1[-len(list_2):] = list_2
+    print(list_1)
 
 
 if __name__ == '__main__':

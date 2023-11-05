@@ -15,6 +15,7 @@ class Crossover(metaclass=ABCMeta):
 
 class PMXCrossover(Crossover):
     def cross(self, parents: List[Chromosome]) -> Chromosome:
+        log.debug(f"[cross] parents: {parents}")
         p1, p2 = parents[0], parents[1]
         p1_perm = []
         p2_perm = []
