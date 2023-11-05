@@ -1,5 +1,5 @@
 from operators.Selection import Selection, RouletteWheelSelection
-from operators.Crossover import Crossover, IBXCrossover
+from operators.Crossover import Crossover, IBXCrossover, PMXCrossover
 from log.log_config import log
 
 
@@ -11,7 +11,7 @@ class OperatorConfig:
         if self.selection is None:
             self.selection = RouletteWheelSelection()
         if self.crossover is None:
-            self.crossover = IBXCrossover()
+            self.crossover = PMXCrossover()
 
 
 if __name__ == '__main__':

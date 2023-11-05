@@ -12,8 +12,8 @@ from utils.file_utils import save_file
 
 class Population:
     def get_fitness(self, chromosome):
-        max_dist = max(self.chromosomes, key=lambda x: x.routes_num).routes_num
-        return chromosome.routes_num - max_dist + chromosome.total_distance / max_dist
+        max_dist = max(self.chromosomes, key=lambda x: x.vehicle_num).vehicle_num
+        return chromosome.vehicle_num - max_dist + chromosome.total_distance / max_dist
 
     # Chromosome Fitness 동기화 및 정렬(오름차순)
     def sync_instances(self):

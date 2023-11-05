@@ -3,14 +3,22 @@ from log.log_config import log
 
 
 class Chromosome:
-    def __init__(self, permutation: list, dataset: Dataset):
-        self.routes, self.waiting_time, self.total_distance = self.get_chromosome(permutation, dataset)
+    dataset = None
+
+    def __init__(self, permutation: list, dataset: Dataset = None):
+
+        if Chromosome.dataset is None:
+            Chromosome.dataset = dataset
+
+        self.routes, self.waiting_time, self.total_distance = self.get_chromosome(permutation)
         if self.routes:
-            self.routes_num = len(self.routes)
+            self.vehicle_num = len(self.routes)
             self.fitness = None
 
     @staticmethod
-    def get_chromosome(permutation: list, dataset: Dataset):
+    def get_chromosome(permutation: list):
+        dataset = Chromosome.dataset
+
         total_routes = []
         waiting_time = []
         total_distance = 0
