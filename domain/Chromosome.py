@@ -6,11 +6,8 @@ from typing import List
 class Chromosome:
     dataset = None
 
-    def __init__(self, permutation: list, dataset: Dataset = None):
-        if Chromosome.dataset is None:
-            Chromosome.dataset = dataset
-
-        self.routes, self.waiting_time, self.total_distance = self.get_chromosome(permutation)
+    def __init__(self, permutation: list):
+        self.routes, self.waiting_time, self.total_distance = Chromosome.permutation_to_chromosome(permutation)
         if self.routes:
             self.vehicle_num = len(self.routes)
             self.fitness = None
@@ -26,8 +23,7 @@ class Chromosome:
         return result
 
     @staticmethod
-    def get_chromosome(permutation: list):
-        dataset = Chromosome.dataset
+    def permutation_to_chromosome(permutation: list):
 
         total_routes = []
         waiting_time = []
@@ -41,16 +37,16 @@ class Chromosome:
         prev_customer_idx = 0
 
         for cur_customer_idx in permutation:
-            cur_customer = dataset.customers[cur_customer_idx]
+            cur_customer = Dataset.customers[cur_customer_idx]
             cur_demand = prev_demand + cur_customer.demand
 
             # + 방문
-            cur_time = prev_time + dataset.distance[prev_customer_idx][cur_customer_idx]
+            cur_time = prev_time + Dataset.distance[prev_customer_idx][cur_customer_idx]
 
             # Validate Constraint
             is_fit = True
 
-            ready_time = dataset.customers[cur_customer_idx].ready_time
+            ready_time = Dataset.customers[cur_customer_idx].ready_time
 
             # Waiting
             if cur_time <= ready_time:
@@ -62,14 +58,14 @@ class Chromosome:
             #  cur_time += cur_customer.service_time
 
             log.debug(f"[{cur_customer_idx}] -------------------------------------------------")
-            log.debug(f"Demand Check {cur_demand}(cur) > {dataset.capacity}(cap)")
+            log.debug(f"Demand Check {cur_demand}(cur) > {Dataset.capacity}(cap)")
             log.debug(f"Cus_Due Check {cur_time}(cur_t) > {cur_customer.due_time}(cus_due)")
             log.debug(
-                f"Total_Due Check {cur_time + dataset.distance[cur_customer_idx][0]}(cur_t with return) > {dataset.customers[0].due_time}(due_time)")
+                f"Total_Due Check {cur_time + Dataset.distance[cur_customer_idx][0]}(cur_t with return) > {Dataset.customers[0].due_time}(due_time)")
 
             # Constraint Check
             # Constraint: Demand
-            if cur_demand > dataset.capacity:
+            if cur_demand > Dataset.capacity:
                 is_fit = False
 
             # Constraint: Current Due
@@ -77,7 +73,7 @@ class Chromosome:
                 is_fit = False
 
             # Constraint: Total Due(With Return)
-            elif cur_time + dataset.distance[cur_customer_idx][0] > dataset.customers[0].due_time:
+            elif cur_time + Dataset.distance[cur_customer_idx][0] > Dataset.customers[0].due_time:
                 is_fit = False
 
             # TODO -- Service Time 추가
@@ -89,7 +85,7 @@ class Chromosome:
                 # 루트에 추가
                 cur_route.append(cur_customer_idx)
 
-                total_distance += dataset.distance[prev_customer_idx][cur_customer_idx]
+                total_distance += Dataset.distance[prev_customer_idx][cur_customer_idx]
                 prev_demand = cur_demand
                 prev_time = cur_time
                 prev_customer_idx = cur_customer_idx
@@ -103,19 +99,19 @@ class Chromosome:
                     return None, None, None
 
                 # 복귀
-                total_distance += dataset.distance[prev_customer_idx][0]
+                total_distance += Dataset.distance[prev_customer_idx][0]
 
                 # 저장
                 total_routes.append(cur_route)
                 waiting_time.append(cur_waiting)
 
                 # 다음 차량 새로 출발
-                total_distance += dataset.distance[0][cur_customer_idx]
+                total_distance += Dataset.distance[0][cur_customer_idx]
 
                 # Sync
                 cur_route = [cur_customer_idx]
                 prev_demand = cur_customer.demand
-                prev_time = dataset.distance[0][cur_customer_idx] + cur_customer.service_time
+                prev_time = Dataset.distance[0][cur_customer_idx] + cur_customer.service_time
                 cur_waiting = 0
 
                 # Waiting 확인
@@ -126,10 +122,10 @@ class Chromosome:
 
                 prev_customer_idx = cur_customer_idx
 
-        # 마지막 찌꺼기 저장
+        # 마지막 저장
         if cur_route:
             # 복귀
-            total_distance += dataset.distance[prev_customer_idx][0]
+            total_distance += Dataset.distance[prev_customer_idx][0]
 
             # 저장
             total_routes.append(cur_route)

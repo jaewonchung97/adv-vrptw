@@ -17,6 +17,8 @@ class RouletteWheelSelection(Selection):
     @staticmethod
     def sel_one(population: Population) -> Chromosome:
         log.debug(f"[Roulette] pop:{population}")
+        log.debug(f"[Roulette] best_fit:{population.chromosomes[0].fitness}")
+        log.debug(f"[Roulette] worst_fit:{population.chromosomes[len(population.chromosomes) - 1].fitness}")
         point = random.random()
         point *= population.total_fitness
         log.debug(f"[Roulette] point:{point}\tpop_total_fit:{population.total_fitness}")

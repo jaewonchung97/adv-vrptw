@@ -24,7 +24,7 @@ def get_cus(parameters):
                     parameters[6])
 
 
-def load_dataset() -> Dataset:
+def load_dataset() -> None:
     with open(f"resources/datasets/{INSTANCE_NAME}.txt") as f:
         customers = []
         for idx, line in enumerate(f):
@@ -37,7 +37,5 @@ def load_dataset() -> Dataset:
             elif idx <= 9 + CUSTOMER_SIZE:
                 params = line.strip().split()
                 customers.append(get_cus(params))
-        dataset = Dataset(vehicle_num, capacity, customers)
+        Dataset(vehicle_num, capacity, customers)
         f.close()
-
-    return dataset

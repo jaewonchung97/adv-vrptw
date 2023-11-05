@@ -15,8 +15,14 @@ def get_metrix(customers: List[Customer]) -> List[List[float]]:
 
 
 class Dataset:
+    max_vehicle_num = None
+    capacity = None
+    customers = None
+    distance = None
+
     def __init__(self, vehicle_num, capacity, customers: List[Customer]):
-        self.vehicle_num = vehicle_num
-        self.capacity = capacity
-        self.customers = customers
-        self.distance = get_metrix(customers)
+        if Dataset.customers is None:
+            Dataset.max_vehicle_num = vehicle_num
+            Dataset.capacity = capacity
+            Dataset.customers = customers
+            Dataset.distance = get_metrix(customers)
