@@ -1,14 +1,3 @@
-from utils.LoadDataset import load_dataset
-
-POPULATION_SIZE = 50
-MAX_GENERATIONS = 100
-MIGRATION = 5
-RECOMBINATION_RATE = 60
-MUTATION_RATE = 60
-INSTANCE_NAME = "r101"
-
-DATASET = load_dataset(INSTANCE_NAME)
-
 """
 - Population size: 50 (2 populations)
 - Maximum number of generations: 100
@@ -28,3 +17,13 @@ DATASET = load_dataset(INSTANCE_NAME)
         NNR_M: 70%
         DCR_M: 30%
 """
+
+POPULATION_SIZE = 50
+MAX_GENERATIONS = 100
+MIGRATION = 5
+RECOMBINATION_RATE = 60
+MUTATION_RATE = 60
+INSTANCE_NAME = "r101"
+CUSTOMER_SIZE = 100
+
+FILE_SAVE = False

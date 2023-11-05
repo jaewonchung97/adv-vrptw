@@ -1,5 +1,6 @@
 from domain.Dataset import Dataset
 from domain.Customer import Customer
+from config import INSTANCE_NAME, CUSTOMER_SIZE
 
 """
 0 R101
@@ -23,8 +24,8 @@ def get_cus(parameters):
                     parameters[6])
 
 
-def load_dataset(instance_name: str) -> Dataset:
-    with open("resources/datasets/%s.txt" % instance_name) as f:
+def load_dataset() -> Dataset:
+    with open(f"resources/datasets/{INSTANCE_NAME}.txt") as f:
         customers = []
         for idx, line in enumerate(f):
             if idx in [0, 1, 2, 3, 5, 6, 7, 8]:
@@ -33,7 +34,7 @@ def load_dataset(instance_name: str) -> Dataset:
                 params = line.strip().split()
                 vehicle_num = int(params[0])
                 capacity = int(params[1])
-            else:
+            elif idx <= 9 + CUSTOMER_SIZE:
                 params = line.strip().split()
                 customers.append(get_cus(params))
         dataset = Dataset(vehicle_num, capacity, customers)
