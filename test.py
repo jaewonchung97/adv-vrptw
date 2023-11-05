@@ -49,6 +49,17 @@ def txt_to_route(txt: str):
     return result
 
 
+import random
+
+"""
+3 1 5
+x 1 x 0 0 0 0 0 0 0
+6 1 7
+
+
+"""
+
+
 def test():
     list_1 = [1, 2, 3, 4, 5]
     list_2 = [99, 98]
@@ -57,4 +68,4 @@ def test():
 
 
 if __name__ == '__main__':
-    test()
+    cross()

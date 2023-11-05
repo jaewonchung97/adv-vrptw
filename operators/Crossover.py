@@ -23,36 +23,19 @@ class PMXCrossover(Crossover):
         for route in p2.routes:
             p2_perm.extend(route)
 
-        new_perm = [0 for i in range(0, len(p1_perm))]
-
         points = sorted(random.sample(range(0, len(p1_perm)), 2))
 
-        not_visited = [i for i in range(1, len(p1_perm) + 1)]
+        result = [0 for i in range(len(p1_perm))]
+        result[points[0]: points[1] + 1] = p1_perm[points[0]: points[1] + 1]
+        for i in result:
+            if i == 0:
+                continue
+            p2_perm.remove(i)
 
-        new_perm[points[0]:points[1] + 1] = p1_perm[points[0]:points[1] + 1]
-        for point in new_perm[points[0]: points[1] + 1]:
-            not_visited.remove(point)
+        for value in p2_perm:
+            result[result.index(0)] = value
 
-        log.debug(f"points: {points}\tp1_perm: {p1_perm}")
-        log.debug(f"new_perm : {new_perm}")
-
-        p2_idx = (points[1] + 1) % len(p2_perm)
-        log.debug(f"p2_pem: {p2_perm}")
-        log.debug(f"idx : {p2_perm.index(p1_perm[points[1]])}\tvalue: {p2_perm[p2_idx]}")
-        new_perm_idx = (points[1] + 1) % len(new_perm)
-
-        while not_visited:
-            p2_idx = (p2_idx + 1) % len(p2_perm)
-            if p2_perm[p2_idx] in not_visited:
-                new_perm[new_perm_idx] = p2_perm[p2_idx]
-                not_visited.remove(new_perm[new_perm_idx])
-                new_perm_idx = (new_perm_idx + 1) % len(new_perm)
-        log.debug(f"P1 Perm : {p1_perm}")
-        log.debug(f"P2 Perm : {p2_perm}")
-        log.debug(f"points : {points}")
-        log.debug(f"new perm : {new_perm}")
-
-        return Chromosome(new_perm)
+        return Chromosome(result)
 
 
 class IBXCrossover(Crossover):
@@ -77,3 +60,14 @@ class IBXCrossover(Crossover):
         centroid = r1[len(r1) // 2]
         log.debug(f"Centroid : {centroid}\tfrom {r1}")
         pass
+
+
+"""
+    8   7   1   (3  6   10)   4   9   5   2
+    10  2   4   (5   1   3)   6   7   8   9
+
+1:  10   2   4   5  1   3   6   7   8   9
+2:  3   2   4   10  6   5   1   7   8   9
+3:  5   2   4   10  6   3   1   7   8   9
+
+"""

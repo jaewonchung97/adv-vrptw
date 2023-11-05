@@ -4,7 +4,6 @@ from typing import List
 
 
 class Chromosome:
-    dataset = None
 
     def __init__(self, permutation: list):
         self.routes, self.waiting_time, self.total_distance = Chromosome.permutation_to_chromosome(permutation)
@@ -38,18 +37,17 @@ class Chromosome:
         prev_customer_idx = 0
 
         for cur_customer_idx in permutation:
-            cur_customer = Dataset.customers[cur_customer_idx]
-            cur_demand = prev_demand + cur_customer.demand
 
             # + 방문
             cur_time = prev_time + Dataset.distance[prev_customer_idx][cur_customer_idx]
+            cur_customer = Dataset.customers[cur_customer_idx]
+            cur_demand = prev_demand + cur_customer.demand
 
             # Validate Constraint
             is_fit = True
 
-            ready_time = Dataset.customers[cur_customer_idx].ready_time
-
             # Waiting
+            ready_time = Dataset.customers[cur_customer_idx].ready_time
             if cur_time <= ready_time:
                 cur_waiting += (ready_time - cur_time)
                 cur_time = ready_time
@@ -79,11 +77,11 @@ class Chromosome:
 
             # TODO -- Service Time 추가
             cur_time += cur_customer.service_time
-
             log.debug(f"[{cur_customer_idx}] is_fit: {is_fit}")
+
             # Constraint Fitted
             if is_fit:
-                # 루트에 추가
+                # 현재 경로에 추가
                 cur_route.append(cur_customer_idx)
 
                 total_distance += Dataset.distance[prev_customer_idx][cur_customer_idx]
