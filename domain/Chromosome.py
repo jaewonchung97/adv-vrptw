@@ -24,11 +24,12 @@ class Chromosome:
 
     @staticmethod
     def permutation_to_chromosome(permutation: list):
-
+        # Return Values
         total_routes = []
         waiting_time = []
         total_distance = 0
 
+        # 각 Route, 대기 시간
         cur_route = []
         cur_waiting = 0
 
