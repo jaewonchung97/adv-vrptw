@@ -24,12 +24,12 @@ def main():
         do_ga(population_2)
         migration(population_1, population_2)
         log.debug(f"[{gen_i}] pop1 len: {len(population_1.chromosomes)}")
-        log.debug(f"[{gen_i}] pop1 Best: {population_1.chromosomes[0]}")
-        log.debug(f"[{gen_i}] pop2 Best: {population_2.chromosomes[0]}")
+        log.info(f"[{gen_i}] pop1 Best: {population_1.chromosomes[0]}")
+        log.info(f"[{gen_i}] pop2 Best: {population_2.chromosomes[0]}")
 
     log.info(f"After--------------------------------------")
     log.info(f"pop1_best : {population_1.chromosomes[0]}")
-    log.info(f"pop2_best : {population_2.chromosomes[0]}")
+    # log.info(f"pop2_best : {population_2.chromosomes[0]}")
     if population_1.chromosomes[0].fitness < population_2.chromosomes[0].fitness:
         draw_routes(population_1.chromosomes[0])
     else:
