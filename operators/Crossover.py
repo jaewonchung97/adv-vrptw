@@ -60,14 +60,3 @@ class IBXCrossover(Crossover):
         centroid = r1[len(r1) // 2]
         log.debug(f"Centroid : {centroid}\tfrom {r1}")
         pass
-
-
-"""
-    8   7   1   (3  6   10)   4   9   5   2
-    10  2   4   (5   1   3)   6   7   8   9
-
-1:  10   2   4   5  1   3   6   7   8   9
-2:  3   2   4   10  6   5   1   7   8   9
-3:  5   2   4   10  6   3   1   7   8   9
-
-"""
