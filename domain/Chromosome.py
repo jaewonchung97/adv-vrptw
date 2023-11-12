@@ -52,10 +52,6 @@ class Chromosome:
                 cur_waiting += (ready_time - cur_time)
                 cur_time = ready_time
 
-            # TODO -- Due time이 Service 시간 포함(순서 변경)인지 아닌지
-            #   # + Service
-            #  cur_time += cur_customer.service_time
-
             log.debug(f"[{cur_customer_idx}] -------------------------------------------------")
             log.debug(f"Demand Check {cur_demand}(cur) > {Dataset.capacity}(cap)")
             log.debug(f"Cus_Due Check {cur_time}(cur_t) > {cur_customer.due_time}(cus_due)")
@@ -75,7 +71,6 @@ class Chromosome:
             elif cur_time + Dataset.distance[cur_customer_idx][0] > Dataset.customers[0].due_time:
                 is_fit = False
 
-            # TODO -- Service Time 추가
             cur_time += cur_customer.service_time
             log.debug(f"[{cur_customer_idx}] is_fit: {is_fit}")
 
@@ -129,12 +124,5 @@ class Chromosome:
             # 저장
             total_routes.append(cur_route)
             waiting_time.append(cur_waiting)
-
-        # # Constraint: Vehicle Num
-        # if len(total_routes) <= dataset.vehicle_num:
-        #     return total_routes, waiting_time, total_distance
-        # else:
-        #     log.error(f"[End] Too Many Routes {total_routes}")
-        #     return None, None, None
 
         return total_routes, waiting_time, total_distance

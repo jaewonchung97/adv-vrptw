@@ -18,6 +18,7 @@ class Population:
         self.max_initial_dist = max(self.chromosomes, key=lambda x: x.total_distance).total_distance
         log.debug(f"max_initial: {self.max_initial_dist}")
         self.total_fitness = 0
+        self.std = 0
         self.sync_instances()
 
     def get_fitness(self, chromosome):
@@ -27,12 +28,16 @@ class Population:
     # Chromosome Fitness 동기화 및 정렬(오름차순)q
     def sync_instances(self):
         self.total_fitness = 0
+        fitness_list = []
         for chromosome in self.chromosomes:
             fitness = self.get_fitness(chromosome)
             chromosome.fitness = fitness
             self.total_fitness += fitness
+            fitness_list.append(fitness)
 
         self.chromosomes.sort(key=lambda x: x.fitness)
+
+        self.std = numpy.std(fitness_list)
 
     @staticmethod
     def make_pop() -> List[Chromosome]:

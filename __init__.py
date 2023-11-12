@@ -15,4 +15,5 @@ if __name__ == '__main__':
     OperatorConfig()
     main()
     end = time.time()
-    log.info(f"Origin Runtime: {end - start}")
+    log.info(f"Runtime: {end - start}")
+

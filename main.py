@@ -2,14 +2,14 @@ import copy
 import random
 from typing import List
 
-from config import RECOMBINATION_RATE, MIGRATION, MAX_GENERATIONS, POPULATION_SIZE
+from config import RECOMBINATION_RATE, MIGRATION, MAX_GENERATIONS, POPULATION_SIZE, FILE_SAVE
 from domain.Chromosome import Chromosome
 from domain.Population import Population
 from log.log_config import log
 from operators.OperatorConfig import OperatorConfig
 
-
-# from utils.graph_utils import draw_routes
+from utils.graph_utils import draw_routes
+from utils.file_utils import save_file
 
 
 def main():
@@ -17,8 +17,11 @@ def main():
     population_2 = Population()
     log.info(f"Before--------------------------------------")
     log.info(f"pop1_best : {population_1.chromosomes[0]}")
-    log.info(f"pop2_best : {population_2.chromosomes[0]}")
-    # draw_routes(population_1.chromosomes[0])
+    log.info(f"pop1_worst : {population_1.chromosomes[POPULATION_SIZE - 1]}")
+    log.info(f"pop1_std : {population_1.std}")
+    log.debug(f"pop2_best : {population_2.chromosomes[0]}")
+    log.debug(f"pop1_worst : {population_2.chromosomes[POPULATION_SIZE - 1]}")
+    draw_routes(population_1.chromosomes[0])
 
     log.debug(f"GA--------------------------------------")
     for gen_i in range(MAX_GENERATIONS):
@@ -26,16 +29,21 @@ def main():
         do_ga(population_2)
         migration(population_1, population_2)
         log.debug(f"[{gen_i}] pop1 len: {len(population_1.chromosomes)}")
-        log.info(f"[{gen_i}] pop1 Best: {population_1.chromosomes[0]}")
-        log.info(f"[{gen_i}] pop2 Best: {population_2.chromosomes[0]}")
+        log.debug(f"[{gen_i}] pop1 Best: {population_1.chromosomes[0]}")
+        log.debug(f"[{gen_i}] pop1_worst : {population_1.chromosomes[POPULATION_SIZE - 1]}")
+        log.debug(f"[{gen_i}] pop2 Best: {population_2.chromosomes[0]}")
+        log.debug(f"[{gen_i}] pop1_worst : {population_2.chromosomes[POPULATION_SIZE - 1]}")
 
     log.info(f"After--------------------------------------")
     log.info(f"pop1_best : {population_1.chromosomes[0]}")
-    log.info(f"pop2_best : {population_2.chromosomes[0]}")
-    # if population_1.chromosomes[0].fitness < population_2.chromosomes[0].fitness:
-    #     draw_routes(population_1.chromosomes[0])
-    # else:
-    #     draw_routes(population_2.chromosomes[0])
+    log.info(f"pop1_worst : {population_1.chromosomes[POPULATION_SIZE - 1]}")
+    log.info(f"pop1_std : {population_1.std}")
+    log.debug(f"pop2_best : {population_2.chromosomes[0]}")
+    log.debug(f"pop1_worst : {population_2.chromosomes[POPULATION_SIZE - 1]}")
+    if population_1.chromosomes[0].fitness < population_2.chromosomes[0].fitness:
+        draw_routes(population_1.chromosomes[0])
+    else:
+        draw_routes(population_2.chromosomes[0])
 
     log.debug(f"pop1--------------------------------------")
     for idx, chromosome in enumerate(population_1.chromosomes):
@@ -44,6 +52,11 @@ def main():
     log.debug(f"pop2--------------------------------------")
     for idx, chromosome in enumerate(population_2.chromosomes):
         log.debug(f"[{idx}]\t{chromosome}")
+
+    if FILE_SAVE:
+        chrom = population_1.chromosomes[0]
+        save_file(chrom.routes,
+                  file_name=f"route_{chrom.vehicle_num}_{round(chrom.total_distance, 1)}")
 
 
 def migration(pop1: Population, pop2: Population) -> None:
