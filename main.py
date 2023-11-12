@@ -1,3 +1,4 @@
+import copy
 import random
 from typing import List
 
@@ -30,7 +31,7 @@ def main():
 
     log.info(f"After--------------------------------------")
     log.info(f"pop1_best : {population_1.chromosomes[0]}")
-    # log.info(f"pop2_best : {population_2.chromosomes[0]}")
+    log.info(f"pop2_best : {population_2.chromosomes[0]}")
     # if population_1.chromosomes[0].fitness < population_2.chromosomes[0].fitness:
     #     draw_routes(population_1.chromosomes[0])
     # else:
@@ -46,8 +47,8 @@ def main():
 
 
 def migration(pop1: Population, pop2: Population) -> None:
-    pop1_best = pop1.chromosomes[0:MIGRATION]
-    pop2_best = pop2.chromosomes[0:MIGRATION]
+    pop1_best = copy.deepcopy(pop1.chromosomes[0:MIGRATION])
+    pop2_best = copy.deepcopy(pop2.chromosomes[0:MIGRATION])
     pop1.chromosomes[0:MIGRATION] = pop2_best
     pop2.chromosomes[0:MIGRATION] = pop1_best
     pop1.sync_instances()

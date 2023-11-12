@@ -12,7 +12,7 @@ class Chromosome:
             self.fitness = None
 
     def __str__(self):
-        return f"Vehicle Num: {self.vehicle_num}\tDistance: {self.total_distance}\tRoutes: {self.routes}"
+        return f"Vehicle Num: {self.vehicle_num}\tDistance: {self.total_distance}\tFitness: {self.fitness}\tRoutes: {self.routes}"
 
     @staticmethod
     def routes_to_permutation(routes: List[List[int]]) -> List[int]:
