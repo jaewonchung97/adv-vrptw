@@ -1,19 +1,17 @@
-import time
+import random
 from typing import List
 
+from config import RECOMBINATION_RATE, MIGRATION, MAX_GENERATIONS, POPULATION_SIZE
 from domain.Chromosome import Chromosome
 from domain.Population import Population
 from log.log_config import log
 from operators.OperatorConfig import OperatorConfig
-from config import RECOMBINATION_RATE, MIGRATION, MAX_GENERATIONS, POPULATION_SIZE
-import random
 
 
 # from utils.graph_utils import draw_routes
 
 
 def main():
-    start = time.time()
     population_1 = Population()
     population_2 = Population()
     log.info(f"Before--------------------------------------")
@@ -45,8 +43,6 @@ def main():
     log.debug(f"pop2--------------------------------------")
     for idx, chromosome in enumerate(population_2.chromosomes):
         log.debug(f"[{idx}]\t{chromosome}")
-    end = time.time()
-    log.info(f"time: {end - start}")
 
 
 def migration(pop1: Population, pop2: Population) -> None:
