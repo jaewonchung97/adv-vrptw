@@ -1,7 +1,11 @@
 import pickle
 import os
 
-filepath = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), "resources/candidates")
+from config import INSTANCE_NAME, CUSTOMER_SIZE
+
+filepath = os.path.join(os.path.abspath(os.path.dirname(
+    os.path.dirname(__file__))), f"resources/candidates/{INSTANCE_NAME}/{CUSTOMER_SIZE}")
+os.makedirs(filepath, exist_ok=True)
 
 
 def save_file(file, file_name):
