@@ -2,12 +2,14 @@ from matplotlib import pyplot as plt
 from matplotlib.path import Path
 import matplotlib.patches as patches
 
-from config import FILE_SAVE, INSTANCE_NAME
+from config import FILE_SAVE, INSTANCE_NAME, DRAW_GRAPH
 from domain.Chromosome import Chromosome
 from domain.Dataset import Dataset
 
 
 def draw_routes(chromosome: Chromosome):
+    if not DRAW_GRAPH:
+        return
     fig, ax = plt.subplots()
     for chrom in chromosome.routes:
         x = []

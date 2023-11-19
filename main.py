@@ -1,5 +1,7 @@
 import copy
 import random
+import numpy as np
+
 from typing import List
 
 from config import RECOMBINATION_RATE, MIGRATION, MAX_GENERATIONS, POPULATION_SIZE, FILE_SAVE
@@ -10,6 +12,27 @@ from operators.OperatorConfig import OperatorConfig
 
 from utils.graph_utils import draw_routes
 from utils.file_utils import save_file
+from utils.file_utils import read_input_file
+
+distance_matrix = None
+time_matrix = None
+
+
+# def main():
+#     # distance_matrix, time_matrix 추가
+#     global distance_matrix, time_matrix
+#     dataset_path = "./resources/datasets/r101.txt"
+#     data = read_input_file(dataset_path)
+#     num_customers = len(data["demands"])
+#     global distance_matrix, time_matrix  # 수정된 부분
+#     distance_matrix = np.zeros((num_customers + 1, num_customers + 1))
+#     time_matrix = np.zeros((num_customers + 1, num_customers + 1))
+#
+#     for i in range(num_customers + 1):
+#         for j in range(num_customers + 1):
+#             distance_matrix[i][j] = np.sqrt((data["x_coords"][i] - data["x_coords"][j]) ** 2 +
+#                                             (data["y_coords"][i] - data["y_coords"][j]) ** 2)
+#             time_matrix[i][j] = distance_matrix[i][j]
 
 
 def main():
@@ -30,9 +53,11 @@ def main():
         migration(population_1, population_2)
         log.debug(f"[{gen_i}] pop1 len: {len(population_1.chromosomes)}")
         log.debug(f"[{gen_i}] pop1 Best: {population_1.chromosomes[0]}")
-        log.debug(f"[{gen_i}] pop1_worst : {population_1.chromosomes[POPULATION_SIZE - 1]}")
+        log.debug(
+            f"[{gen_i}] pop1_worst : {population_1.chromosomes[POPULATION_SIZE - 1]}")
         log.debug(f"[{gen_i}] pop2 Best: {population_2.chromosomes[0]}")
-        log.debug(f"[{gen_i}] pop1_worst : {population_2.chromosomes[POPULATION_SIZE - 1]}")
+        log.debug(
+            f"[{gen_i}] pop1_worst : {population_2.chromosomes[POPULATION_SIZE - 1]}")
 
     log.info(f"After--------------------------------------")
     log.info(f"pop1_best : {population_1.chromosomes[0]}")
