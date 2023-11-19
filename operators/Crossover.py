@@ -38,7 +38,8 @@ class PMXCrossover(Crossover):
             if not self.routes_overlap(child_chromosome):
                 return child_chromosome
 
-    def routes_overlap(self, chromosome: Chromosome) -> bool:
+    @staticmethod
+    def routes_overlap(chromosome: Chromosome) -> bool:
         seen_customers = set()
         for route in chromosome.routes:
             for customer in route:
@@ -61,7 +62,9 @@ class IBXCrossover(Crossover):
             if point < sum_val:
                 return i
 
-    def construct_child_route(self, parent1: Chromosome, parent2: Chromosome, route_idx: int, centroid: int) -> List[int]:
+    @staticmethod
+    def construct_child_route(parent1: Chromosome, parent2: Chromosome, route_idx: int, centroid: int) -> List[
+        int]:
         # Solomon의 영감을 받은 수정된 삽입 휴리스틱의 구현
         child_route = [centroid]  # 중심으로 시작
 
@@ -95,7 +98,6 @@ class IBXCrossover(Crossover):
         child_route = self.construct_child_route(p1, p2, r1_idx, centroid)
 
         # Create a new Chromosome with the child route
-        child_chromosome = Chromosome(
-            permutation=self.route_to_permutation(child_route))
+        child_chromosome = Chromosome(child_route)
 
         return child_chromosome

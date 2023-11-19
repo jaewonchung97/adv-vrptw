@@ -18,22 +18,21 @@ distance_matrix = None
 time_matrix = None
 
 
-def main():
-    # distance_matrix, time_matrix 추가
-    global distance_matrix, time_matrix
-    dataset_path = "./resources/datasets/r101.txt"
-    data = read_input_file(dataset_path)
-
-    num_customers = len(data["demands"])
-    global distance_matrix, time_matrix  # 수정된 부분
-    distance_matrix = np.zeros((num_customers + 1, num_customers + 1))
-    time_matrix = np.zeros((num_customers + 1, num_customers + 1))
-
-    for i in range(num_customers + 1):
-        for j in range(num_customers + 1):
-            distance_matrix[i][j] = np.sqrt((data["x_coords"][i] - data["x_coords"][j]) ** 2 +
-                                            (data["y_coords"][i] - data["y_coords"][j]) ** 2)
-            time_matrix[i][j] = distance_matrix[i][j]
+# def main():
+#     # distance_matrix, time_matrix 추가
+#     global distance_matrix, time_matrix
+#     dataset_path = "./resources/datasets/r101.txt"
+#     data = read_input_file(dataset_path)
+#     num_customers = len(data["demands"])
+#     global distance_matrix, time_matrix  # 수정된 부분
+#     distance_matrix = np.zeros((num_customers + 1, num_customers + 1))
+#     time_matrix = np.zeros((num_customers + 1, num_customers + 1))
+#
+#     for i in range(num_customers + 1):
+#         for j in range(num_customers + 1):
+#             distance_matrix[i][j] = np.sqrt((data["x_coords"][i] - data["x_coords"][j]) ** 2 +
+#                                             (data["y_coords"][i] - data["y_coords"][j]) ** 2)
+#             time_matrix[i][j] = distance_matrix[i][j]
 
 
 def main():
@@ -108,8 +107,6 @@ def do_ga(pop):
         parents = OperatorConfig.selection.select(pop)
         log.debug(f"[Select] parents = {parents}")
         offspring = OperatorConfig.crossover.cross(parents)
-        # offspring = OperatorConfig.mutation.mutate(offspring) #TypicalMutation
-        offspring = OperatorConfig.mutation.mutate(
-            offspring, distance_matrix, time_matrix)  # LNSBMutation
+        offspring = OperatorConfig.mutation.mutate(offspring)
         offsprings.append(offspring)
     replace(pop, offsprings)

@@ -1,9 +1,12 @@
 import pickle
 import os
 import numpy as np
+from log.log_config import log
+from config import INSTANCE_NAME, CUSTOMER_SIZE
 
 filepath = os.path.join(os.path.abspath(os.path.dirname(
-    os.path.dirname(__file__))), "resources/candidates")
+    os.path.dirname(__file__))), f"resources/candidates/{INSTANCE_NAME}/{CUSTOMER_SIZE}")
+os.makedirs(filepath, exist_ok=True)
 
 
 def save_file(file, file_name):
@@ -40,9 +43,9 @@ def read_input_file(file_path):
                 coordinates[i] - coordinates[j])
 
     ready_times = np.array([0] + [float(line.strip().split()[4])
-                           for line in data_lines])
+                                  for line in data_lines])
     due_dates = np.array([0] + [float(line.strip().split()[5])
-                         for line in data_lines])
+                                for line in data_lines])
     service_times = np.array(
         [0] + [float(line.strip().split()[6]) for line in data_lines])
 
@@ -53,6 +56,8 @@ def read_input_file(file_path):
             time_matrix[i, j] = max(
                 0, ready_times[j] - (due_dates[i] + service_times[i]))
 
+    log.info(distance_matrix)
+    log.info(time_matrix)
     return {
         "distance_matrix": distance_matrix,
         "time_matrix": time_matrix
