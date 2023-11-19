@@ -57,6 +57,9 @@ def main():
         chrom = population_1.chromosomes[0]
         save_file(chrom.routes,
                   file_name=f"route_{chrom.vehicle_num}_{round(chrom.total_distance, 1)}")
+        chrom = population_2.chromosomes[0]
+        save_file(chrom.routes,
+                  file_name=f"route_{chrom.vehicle_num}_{round(chrom.total_distance, 1)}")
 
 
 def migration(pop1: Population, pop2: Population) -> None:
