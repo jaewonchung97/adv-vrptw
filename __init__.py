@@ -16,4 +16,3 @@ if __name__ == '__main__':
     main()
     end = time.time()
     log.info(f"Runtime: {end - start}")
-
