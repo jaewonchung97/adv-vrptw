@@ -26,8 +26,7 @@ class RouletteWheelSelection(Selection):
         sum_val = 0
         for i in range(len(population.chromosomes)):
             chromosome = population.chromosomes[i]
-            sum_val += chromosome.fitness
-            log.debug(f"[Roulette] sum_val:{sum_val}\tpoint:{point}")
+            sum_val += (1 / chromosome.fitness)
             if point < sum_val:
                 return chromosome
 

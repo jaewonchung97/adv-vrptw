@@ -83,7 +83,8 @@ def do_ga(pop):
         if r > RECOMBINATION_RATE / 100:
             continue
         parents = OperatorConfig.selection.select(pop)
-        log.debug(f"[Select] parents = {parents}")
+        log.debug(f"[Select] parents1 = {pop.chromosomes.index(parents[0])}")
+        log.debug(f"[Select] parents2 = {pop.chromosomes.index(parents[1])}")
         offspring = OperatorConfig.crossover.cross(parents)
         offspring = OperatorConfig.mutation.mutate(offspring)
         offsprings.append(offspring)

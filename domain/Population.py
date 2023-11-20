@@ -32,7 +32,7 @@ class Population:
         for chromosome in self.chromosomes:
             fitness = self.get_fitness(chromosome)
             chromosome.fitness = fitness
-            self.total_fitness += fitness
+            self.total_fitness += (1 / fitness)
             fitness_list.append(fitness)
 
         self.chromosomes.sort(key=lambda x: x.fitness)
